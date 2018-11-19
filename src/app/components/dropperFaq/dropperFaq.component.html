@@ -1,0 +1,64 @@
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col-md-0 col-lg-1 col-xl-3">
+
+        </div>
+        <div class="col-md-12 col-lg-10 col-xl-6">
+            <div class='col-sm-12 mt-2 card-text'>
+                <mat-card>
+
+                    <h1>How to create valid CSV file</h1>
+                    <h3>File struture</h3>
+                    <ul>
+                        <li>
+                            CSV file should contains list of address and balance. Each entry should be in new line;
+                        </li>
+                        <li>
+                            Address and balance need to be separeted by semicolon <code style="font-size: 20px;">;</code>
+                        </li>
+                        <li>CSV file should not have headers. </li>
+                    </ul>
+                    <p>Below example of file base on that rules :</p> 
+                        
+<pre class="text-left"><code>...
+0xA62Ab141c4eb506BA2604b43265e198E76feBe60;44000 
+0x4Ec13c1F16D51CeC95FA51Fc9C912835C39A4184;11000
+0x8B982786070a831254266Cd0D44Fe2B80E79A772;22000
+0x1A1639Cd4Dc312541ce09FaA3A8D755015a215b6;16500
+0x0E8486d5399B85Dd8588609Da1C141f6D7293De3;22000
+0x324365B0A4A2e6f2eD452221f4792EAA8e89A7E0;82513,75
+0x224E83AB461c1CE7F9cC758D1C630AccBac2Ee4E;33000
+0xaee65D952c1b845ed25963C9663bd92C5f43a0E8;22000
+0x86EaBa8A30F7bfd6C4eD1ac40f81F87AF4e865c3;55000
+0xfD0A64bA69a694a4931d27CE92FAf5E7A089616f;148546,75
+0x6ca9bdB3e2EaD517c4C663B568083e4c5ede9ad3;27500
+0xbcBAAfDe2A5C06EEF4e97F8aBDF5D2aC945b771A;22011
+0x3F5013910d3351234Bc20117d47bb6b31fEF7ebD;242121
+0x2783Fbf80A0df86679C7ec5b721570CA1cF3999C;38519,25
+0x95b2a2e56bF05b54030e3713C783b35F8fF6a48f;16508,25
+...
+                        </code></pre>
+                        <h3>Address format</h3>
+                        <ul>
+                            <li>
+                                Ethereum address should be in hex format and starts with <code style="font-size: 20px;">0x</code> prefix.
+                            </li>
+                            <li> Application automaticly check validity of all addresses in the imported file</li>
+                        </ul>
+                        <h3>Balance format</h3>
+                        <ul>
+                            <li>
+                                Decimals should be separated by a comma <code style="font-size: 20px;">,</code> or dot <code style="font-size: 20px;">.</code>.
+                            </li>
+                            <li>It is no need to declare a value with decimals precision, Eth ToolKit automaticly calculate number of zeros , that need to be add during transaction ( base on token decimals property )</li>
+                        </ul>
+                       
+                </mat-card>
+            </div>
+        </div>
+        <div class="col-md-0 col-lg-1 col-xl-3">
+
+        </div>
+    </div>
+
+</div>

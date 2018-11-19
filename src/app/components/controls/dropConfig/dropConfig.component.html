@@ -1,0 +1,60 @@
+<form [formGroup]="thirdFormGroup" class="d-flex flex-column">
+
+  <label>Any donation ? </label>
+  <mat-radio-group [disabled]="allowanceStatus == 1" [(ngModel)]="context.payableMethod" (change)="donationChange($event)" [ngModelOptions]="{standalone: true}">
+    <mat-radio-button class="mr-3" value="token">{{context.erc20?.token.symbol}}</mat-radio-button>
+    <mat-radio-button class="mr-3" value="eth">ETH</mat-radio-button>
+    <mat-radio-button class="mr-3" [checked]='true' value="none">Maybe next time</mat-radio-button>
+    <mat-form-field class="mr-3" *ngIf="context.payableMethod != 'none'" style="width: 200px;">
+      <input style="font-size: 20px;" OnlyNumber="true" [(ngModel)]="context.airdrop.donation" (change)="onDonationValueChanged()" [disabled]="allowanceStatus == 1" 
+        [ngModelOptions]="{standalone: true}" min="0" matInput placeholder="Amount" type="number">
+      <span matSuffix>{{donationCurrency}}</span>
+    </mat-form-field>
+    <i *ngIf="context.airdrop.donation>0" style="color: green" class="far fa-smile fa-3x"></i>
+    <i *ngIf="context.airdrop.donation == null || context.airdrop.donation==0" style="color: grey" class="far fa-sad-tear fa-3x"></i>
+  </mat-radio-group>
+  <mat-divider class="mb-4"></mat-divider>
+  <mat-form-field >
+    <mat-select [disabled]="allowanceStatus == 1" matTooltip="Amount of token transfers in one ethereum transaction."  [(value)]="context.airdrop.packageSize" (selectionChange)="updatePackageSize($event)" placeholder="Package drop size">
+      <mat-option value="25">25</mat-option>
+      <mat-option value="50">50</mat-option>
+      <mat-option value="75">75</mat-option>
+      <mat-option value="100">100</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-divider class="mb-4"></mat-divider>
+  <mat-card>
+    <div *ngIf="allowanceStatus == 1" style="float: right;">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div *ngIf="allowanceStatus == 2" style="float: right;">
+      <i style="color: green;" class="far fa-check-circle fa-5x"></i>
+    </div>
+    <div style="float: right;" *ngIf="allowanceStatus == 3">
+      <i style="color: red;" class="fas fa-exclamation-circle fa-5x"></i>
+    </div>
+
+    <mat-card-header>
+      <mat-card-title>Approve token usage</mat-card-title>
+      <mat-card-subtitle>Current allowance : {{context.tokenData.allowanceRaw |
+        num:context.erc20?.token.decimals}} {{context.erc20?.token.symbol}}</mat-card-subtitle>
+      <mat-card-subtitle>Total tokens required :
+        {{context.airdrop.airdropData?.totalToDropRaw
+        | num:context.erc20?.token.decimals}} {{context.erc20?.token.symbol}}</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="approveTx">
+        <a  style="font-size:14px" target="_blank" href="{{approveTx}}">
+          {{(approveTx) | slice:0:60}}...
+        </a>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-actions *ngIf="isApproveButtonRequired()">
+      <button [disabled]="allowanceStatus==1" mat-raised-button class="ml-4 mb-4" (click)="approve()" color="primary">Approve</button>
+    </mat-card-actions>
+  </mat-card>
+  <div class="mt-3">
+    <button class="mr-3" mat-raised-button matStepperPrevious>Back</button>
+    <button *ngIf="!isApproveButtonRequired()" mat-raised-button matStepperNext>Next</button>
+  </div>
+</form>

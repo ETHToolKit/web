@@ -1,0 +1,92 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.token .metamask h2{
+    margin-top: 50px;
+}
+html,
+body {
+    background-color:  #ECEFF1;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    height: 100%;
+}
+
+.mat-stepper-horizontal, .mat-stepper-vertical {
+    border-radius: 8px;
+}
+
+.mat-horizontal-content-container {
+    padding: 12px 24px 24px 24px !important;
+}
+
+nav .network {
+    font-size: 14px;
+}
+
+.footer a {
+    color: rgba(0,0,0,0.38);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: rgba(3,155,229,0.5);
+}
+
+.footer {
+    font-size: 13px;
+    line-height: 16px;
+    color: rgba(0,0,0,0.54);
+    white-space: nowrap;
+    margin-top:20px;
+    margin-bottom: 20px;
+}
+
+.card-text p{
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(0,0,0,.7);
+}
+
+.card-text h3{
+    font-size: 20px;
+    line-height: 20px;
+    margin-bottom: 20px;
+    color: rgba(0,0,0,.75);
+}
+
+.card-text h1{
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: rgba(0,0,0,.75);
+}
+
+.card-text li{
+    font-size: 14px;
+    color: rgba(0,0,0,.75);
+}
+
+.dist-start:hover {
+    background-color:  rgba(243, 243, 243, 0.4);
+    cursor: pointer;
+}
+
+nav .social-icons {
+    margin-right: 10px;
+    margin-left: 5px;
+    color: rgba(0,0,0,.6);
+}
+
+nav .social-icons:hover {
+    color: rgba(3,155,229,0.5);
+}
+
+nav .menu-item:hover {
+    color: rgba(3,155,229,0.5);
+}
+
+.mat-stepper-horizontal, .mat-stepper-vertical {
+    margin-top:40px;
+}
+
+
+
