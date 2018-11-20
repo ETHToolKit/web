@@ -28,13 +28,20 @@ module.exports = {
   // },
   networks: {
 
-      local: {
-          host: 'localhost',
-          port: 9545,
-          network_id: '*', // eslint-disable-line camelcase
-          gasPrice: 4500000000,
-          gasLimit: 5000000,
-      },
+    local: {
+      host: 'localhost',
+      port: 9545,
+      network_id: '*', // eslint-disable-line camelcase
+      gasPrice: 4500000000,
+      gasLimit: 5000000,
+    },
+    testrpc: {
+      host: 'localhost',
+      port: 8545,
+      network_id: '*', // eslint-disable-line camelcase
+      gasPrice: 4500000000,
+      gasLimit: 5000000,
+    },
 
       rinkeby: {
         provider: new WalletProvider(wallet, "https://rinkeby.infura.io/" + secrets.infuraApiKey),
