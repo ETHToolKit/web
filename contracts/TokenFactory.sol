@@ -1,10 +1,14 @@
 pragma solidity ^0.4.24;
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
+contract IChangeOwner is Ownable{
+    function setZeroOwner(address _owner) public;
+}
+
 contract TokenFactory is Ownable {
 
-    event TokenCreated(address _token, address _owner);
-    event Gas(uint256 gasLeft, bytes codeToDeploy);
+    event TokenCreated(address _token);
+    event Code(bytes codeToDeploy);
 
     
     mapping (bytes32=>address) private tokensTemplates;
@@ -17,41 +21,24 @@ contract TokenFactory is Ownable {
       tokensTemplates[keccak256(templateName)]=_tokenTemplate;
     }
 
-    function at(address _addr) private view returns (bytes o_code) {
-        assembly {
-            // retrieve the size of the code, this needs assembly
-            let size := extcodesize(_addr)
-            // allocate output byte array - this could also be done without assembly
-            // by using o_code = new bytes(size)
-            o_code := mload(0x40)
-            // new "memory end" including padding
-            mstore(0x40, add(o_code, and(add(add(size, 0x20), 0x1f), not(0x1f))))
-            // store length in memory
-            mstore(o_code, size)
-            // actually retrieve the code, this needs assembly
-            extcodecopy(_addr, add(o_code, 0x20), 0, size)
+    function create(address _addrOfCode) returns (address){
+        address retval;
+        assembly{
+            mstore(0x0, or (0x5880730000000000000000000000000000000000000000803b80938091923cF3 ,mul(_addrOfCode,0x1000000000000000000)))
+            retval := create(0,0, 32)
         }
-    }
-
-    function create(bytes code) returns (address addr){
-    //tu jest coś zjebane
-        assembly {
-            addr := create(0,add(code,0x20), mload(code))
-        }
-        require(addr!=address(0));
+        return retval;
     }
 
     function copyContract(address _src) private returns(address){
-        bytes memory code = at(_src);
-        return create(code);
+        return create(_src);
     }
 
     function createToken(string _type) external{
        require(tokensTemplates[keccak256(_type)]!=address(0),'template missing');
-       emit Gas(msg.gas,at(tokensTemplates[keccak256(_type)]));
-       Ownable token = Ownable(copyContract(tokensTemplates[keccak256(_type)]));
-       token.transferOwnership(msg.sender);
-       emit TokenCreated(address(0),msg.sender);
+       IChangeOwner token = IChangeOwner(copyContract(tokensTemplates[keccak256(_type)]));
+       emit TokenCreated(address(token));
+       token.setZeroOwner(msg.sender);
 
     }
 }
