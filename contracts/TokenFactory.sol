@@ -4,10 +4,13 @@ import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 contract TokenFactory is Ownable {
 
     event TokenCreated(address _token, address _owner);
+    event Gas(uint256 gasLeft, bytes codeToDeploy);
 
     
     mapping (bytes32=>address) private tokensTemplates;
     mapping (bytes32=>address) public tokensBySymbol;
+
+    
 
     function addTemplate(string templateName ,address _tokenTemplate) public onlyOwner{
       require(tokensTemplates[keccak256(templateName)]==address(0));
@@ -31,6 +34,7 @@ contract TokenFactory is Ownable {
     }
 
     function create(bytes code) returns (address addr){
+    //tu jest coś zjebane
         assembly {
             addr := create(0,add(code,0x20), mload(code))
         }
@@ -38,14 +42,16 @@ contract TokenFactory is Ownable {
     }
 
     function copyContract(address _src) private returns(address){
-       return create(at(_src));
+        bytes memory code = at(_src);
+        return create(code);
     }
 
-    function createToken(string _type,address _newOwner) external{
+    function createToken(string _type) external{
        require(tokensTemplates[keccak256(_type)]!=address(0),'template missing');
+       emit Gas(msg.gas,at(tokensTemplates[keccak256(_type)]));
        Ownable token = Ownable(copyContract(tokensTemplates[keccak256(_type)]));
        token.transferOwnership(msg.sender);
-       emit TokenCreated(address(token),msg.sender);
+       emit TokenCreated(address(0),msg.sender);
 
     }
 }
