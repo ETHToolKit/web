@@ -41,10 +41,11 @@ contract('ContractFactory', function (accounts) {
 
     it("Should create template instance", async function () {
 
-        var initData = data.template.init.request(18, "Demo", "DMO", accounts[1]).params[0].data;
-        var {logs} = await data.factory.createContract("MintableToken", initData);
+        var initData = data.template.init.request(18, "Demo", "DMO", accounts[1],true, 1000000).params[0].data;
         
-        var newContractAddress = logs[0].args.newContract;
+        var {logs} = await data.factory.createContract("MintableToken", initData);
+ 
+        var newContractAddress = logs[1].args.newContract;
         var contractInstance = MintableTokenTemplate.at(newContractAddress);
         var owner = await contractInstance.owner();
 

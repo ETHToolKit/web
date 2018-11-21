@@ -34,8 +34,9 @@ contract ContractFactory is Withdrawable {
         require(templates[keccak256(abi.encodePacked(_type))]!=address(0),"Template is missing");
         address newContract = create(templates[keccak256(_type)]);
 
-        emit ContractCreated(address(newContract));
         newContract.call(params);
+        
+        emit ContractCreated(address(newContract));
     }
 
 }

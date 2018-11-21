@@ -20,17 +20,23 @@ contract MintableTokenTemplate is MintableToken  {
         uint8 _decimals,
         string _name,
         string _symbol, 
-        address _newOwner) 
+        address _newOwner,
+        bool _finishMinting,
+        uint256 _initSupply) 
         public 
         {
-        
-        require(_newOwner != address(0x0), "Owner address should not be equals 0x0");
 
         name = _name;
         symbol = _symbol;
         decimals = _decimals;
-        initOwner(_newOwner);
-       
+        initOwner(msg.sender);
+
+        mint(msg.sender, _initSupply);
+
+        if(_finishMinting) 
+            finishMinting();
+
+        transferOwnership(_newOwner);
     }
     
 }
