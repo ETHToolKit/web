@@ -41,13 +41,15 @@ export class AppComponent {
             this.isReady = 1;
             this.issueText = "Waiting for connection to Metamask";
         }
-        else if (data.event == ServiceEvent.AccountChanged) {
+        else if (data.event == ServiceEvent.AccountChanged ) {
             if (data.lastAccount != "" && data.lastAccount != data.newAccount)
                 location.reload();
-            this.isReady = 2;
-            this.noAccount = false;
-            this.noMetamask = false;
-            this.issueText = null;
+            if(!this.notSupportedNetwork) {
+                this.isReady = 2;
+                this.noAccount = false;
+                this.noMetamask = false;
+                this.issueText = null;
+            }
         }
         else if (data.event == ServiceEvent.AccountNotFound) {
             this.isReady = 1;

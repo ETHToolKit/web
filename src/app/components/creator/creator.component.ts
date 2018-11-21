@@ -20,14 +20,8 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 })
 export class CreatorComponent implements OnInit {
 
-    noMetamask: boolean = false;
-    noAccount: boolean = true;
-    loading: boolean = true;
-    notSupportedNetwork: boolean = false;
-
     constructor(
         private _ethereumService: EthereumService) {
-
         this._ethereumService.OnStateChanged().subscribe((result) => this.handleStateChanged(result));
     }
 
@@ -36,37 +30,10 @@ export class CreatorComponent implements OnInit {
     }
 
     public handleStateChanged(data) {
-        if (data.event == ServiceEvent.Idle) {
-            //this.loadingEth = true;
-        }
-        else if (data.event == ServiceEvent.AccountChanged) {
+        if (data.event == ServiceEvent.AccountChanged) {
             this.reset();
-            this.noAccount = false;
-            this.noMetamask = false;
-            this.loading = false;
-        }
-        else if (data.event == ServiceEvent.AccountNotFound) {
-            this.noAccount = true;
-            this.loading = false;
-        }
-        else if (data.event == ServiceEvent.MetamaskNotDetected) {
-            this.noMetamask = true;
-            this.loading = false;
-        }
-        else if (data.event == ServiceEvent.MetamaskDetectedWrongNetwork) {
-            this.loading = false;
-            this.notSupportedNetwork = true;
-        }
-        else if (data.event == ServiceEvent.MetamaskDetected) {
-
-            this.noMetamask = false;
-        } else {
-            // this.noMetamask = false;
-            this.loading = false;
         }
     }
-
-  
 
     public reset() {
        

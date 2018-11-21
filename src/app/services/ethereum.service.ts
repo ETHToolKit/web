@@ -38,6 +38,10 @@ export class EthereumService {
         }
     }
 
+    public isSupportedNetwork() : boolean {
+        return this.networkId=='1' || this.networkId=='4';
+    }
+
     public isMainnet():boolean {
         return this.networkId == "1";
     }
@@ -47,7 +51,7 @@ export class EthereumService {
         if (window.ethereum) {
             window.web3 = new Web3(window.ethereum);
             // Request account access if needed
-            this.stateChanged.next({ event: ServiceEvent.WaitingForAcceptance });
+            this.stateChanged.next({ event: ServiceEvent.WaitingForAcceptance, isReady:false });
             window.ethereum.enable().then(() => {
                 this.web3 = window.web3;
                 this.networkId = this.web3.version.network;
@@ -55,16 +59,16 @@ export class EthereumService {
                 console.log("Network ", this.getNetwork());
 
                 if (this.getNetwork().toLowerCase() == 'rinkeby' || this.getNetwork().toLowerCase() == 'mainnet') {
-                    this.stateChanged.next({ event: ServiceEvent.MetamaskDetected });
+                    this.stateChanged.next({ event: ServiceEvent.MetamaskDetected , isReady:false});
                     this.subUpdateState = timer(400, 1000).subscribe(() => this.updateState());
                 } else {
-                    this.stateChanged.next({ event: ServiceEvent.MetamaskDetectedWrongNetwork });
+                    this.stateChanged.next({ event: ServiceEvent.MetamaskDetectedWrongNetwork , isReady:false});
                     this.subUpdateState = timer(400, 1000).subscribe(() => this.updateState());
                 }
 
             }).catch(() => {
                 this.web3 = null;
-                this._zone.run(() => this.stateChanged.next({ event: ServiceEvent.MetamaskNotDetected }));
+                this._zone.run(() => this.stateChanged.next({ event: ServiceEvent.MetamaskNotDetected , isReady:false}));
             });
         }
         else if (typeof window.web3 !== 'undefined') {
@@ -74,17 +78,17 @@ export class EthereumService {
                 console.log("Network ", this.getNetwork());
 
                 if (this.getNetwork().toLowerCase() == 'rinkeby' || this.getNetwork().toLowerCase() == 'mainnet') {
-                    this.stateChanged.next({ event: ServiceEvent.MetamaskDetected });
+                    this.stateChanged.next({ event: ServiceEvent.MetamaskDetected , isReady:false});
                     this.subUpdateState = timer(400, 1000).subscribe(() => this.updateState());
                 } else {
-                    this.stateChanged.next({ event: ServiceEvent.MetamaskDetectedWrongNetwork });
+                    this.stateChanged.next({ event: ServiceEvent.MetamaskDetectedWrongNetwork , isReady:false});
                     this.subUpdateState = timer(400, 1000).subscribe(() => this.updateState());
                 }
 
             });
         }
         else {
-            this.stateChanged.next({ event: ServiceEvent.MetamaskNotDetected });
+            this.stateChanged.next({ event: ServiceEvent.MetamaskNotDetected , isReady:false});
             this.subUpdateState = timer(400, 1000).subscribe(() => this.updateState());
         }
     }
@@ -107,14 +111,14 @@ export class EthereumService {
                     this.internalState = 3;
                     this._zone.run(() => {
                         this.currentAccount = "";
-                        this.stateChanged.next({ event: ServiceEvent.AccountNotFound })
+                        this.stateChanged.next({ event: ServiceEvent.AccountNotFound , isReady:false})
                     });
                 }
                 else if (accs.length == 0 && this.internalState != 1) {
                     this.internalState = 1;
                     this._zone.run(() => {
                         this.currentAccount = "";
-                        this.stateChanged.next({ event: ServiceEvent.AccountNotFound })
+                        this.stateChanged.next({ event: ServiceEvent.AccountNotFound , isReady:false})
                     });
                 }
                 else if (accs.length > 0 && this.currentAccount !== accs[0]) {
@@ -133,7 +137,7 @@ export class EthereumService {
         let lastAccount = this.currentAccount;
         this.currentAccount = accs[0];
 
-        this.stateChanged.next({ event: ServiceEvent.AccountChanged, lastAccount: lastAccount, newAccount: this.currentAccount });
+        this.stateChanged.next({ event: ServiceEvent.AccountChanged, lastAccount: lastAccount, newAccount: this.currentAccount , isReady:true});
     }
 
     public OnStateChanged = (): Observable<any> => {

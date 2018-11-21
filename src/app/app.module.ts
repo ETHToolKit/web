@@ -65,6 +65,7 @@ import { DropperFaq } from './components/dropperFaq/dropperFaq.component';
 import { DropPackageComponent } from './components/controls/dropPackage/dropPackage.component';
 import { DropperComponent } from './components/dropper/dropper.component';
 import { TermsComponent } from './components/terms/terms.component';
+import { CreatorComponent } from './components/creator/creator.component';
 
 
 
@@ -72,6 +73,7 @@ const appRoutes: Routes = [
   { path: 'dropper', component: DropperComponent },
   { path: 'home', component: HomeComponent },
   { path: 'terms', component: TermsComponent },
+  { path: 'creator', component: CreatorComponent },
   { path: 'dropperFaq', component: DropperFaq },
   { path: '',
     redirectTo: '/home',
@@ -93,7 +95,8 @@ const appRoutes: Routes = [
     DropConfigComponent,
     DropPackageComponent,
     TermsComponent,
-    DropperFaq
+    DropperFaq,
+    CreatorComponent
   ],
   imports: [
     RouterModule.forRoot(
