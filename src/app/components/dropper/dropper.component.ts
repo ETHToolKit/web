@@ -29,7 +29,6 @@ export class DropperComponent implements OnInit {
     noAccount: boolean = true;
     loading: boolean = true;
     notSupportedNetwork: boolean = false;
-    showIntroduction:boolean = true;
 
     @ViewChild(DataImporterComponent) dataImporter: DataImporterComponent;
     @ViewChild(TokenInfoComponent) tokenInfo: TokenInfoComponent;
@@ -46,10 +45,6 @@ export class DropperComponent implements OnInit {
 
     async ngOnInit() {
         
-    }
-
-    public start() {
-        this.showIntroduction = false;
     }
 
     public handleStateChanged(data) {
@@ -73,7 +68,6 @@ export class DropperComponent implements OnInit {
         else if (data.event == ServiceEvent.MetamaskDetectedWrongNetwork) {
             this.loading = false;
             this.notSupportedNetwork = true;
-            this.showIntroduction = false;
         }
         else if (data.event == ServiceEvent.MetamaskDetected) {
             if(this._ethereumService.getNetwork().toLowerCase() =="rinkeby")
@@ -82,7 +76,6 @@ export class DropperComponent implements OnInit {
                 this.context.dropper = new Dropper(environment.dropperAddressMainnet, this._ethereumService, abi);
 
             this.noMetamask = false;
-            this.showIntroduction = true;
         } else  {
             // this.noMetamask = false;
             this.loading = false;

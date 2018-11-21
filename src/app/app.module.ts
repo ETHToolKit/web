@@ -74,10 +74,10 @@ const appRoutes: Routes = [
   { path: 'terms', component: TermsComponent },
   { path: 'dropperFaq', component: DropperFaq },
   { path: '',
-    redirectTo: '/dropper',
+    redirectTo: '/home',
     pathMatch: 'full'
   },
-  { path: '**', component: DropperComponent }
+  { path: '**', component: HomeComponent }
 ];
 
 

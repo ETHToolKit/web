@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div class="row" *ngIf="!showIntroduction">
+  <div class="row" >
     <div class="col-md-0 col-lg-1 col-xl-3">
 
     </div>
@@ -46,23 +46,7 @@
 
     </div>
   </div>
-  <div class="row mt-5 align-items-center justify-content-center" *ngIf="showIntroduction"> 
-      <div >
-        <mat-card class="dist-start" style="max-width: 300px;min-width: 250px;" (click)="start();">
-            <mat-card-header>
-                <mat-card-title>Distribute Your tokens</mat-card-title>
-            </mat-card-header>
-            <img mat-card-image src="./assets/img/dropper.png" alt="Photo of a Shiba Inu">
-            <mat-card-content>
-                <p>
-                    Import CSV file or type data contains addresses and balances and easly distribute tokens using Metamask na ETHToolKit.
-                </p>
-              </mat-card-content>
-         
-        </mat-card>
-      </div>
-      
-  </div>
+ 
   <div class="row footer"> 
     <div class="col-md-12 text-center ">
       <a href="/terms" target="_blank">Terms</a>

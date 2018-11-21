@@ -65,9 +65,24 @@ nav .network {
     color: rgba(0,0,0,.75);
 }
 
-.dist-start:hover {
+.home .dist-start {
+    max-width: 300px;
+    min-width: 250px;
+    margin:10px;
+}
+
+.home a {
+    text-decoration: none;
+}
+.home a:hover {
+    text-decoration: none;
+}
+
+.home .dist-start:hover {
     background-color:  rgba(243, 243, 243, 0.4);
     cursor: pointer;
+    
+    
 }
 
 nav .social-icons {

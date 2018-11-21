@@ -1,1 +1,31 @@
-<div>Welcome home </div>
+<div class="container-fluid home">
+    <div class="row mt-5 align-items-center justify-content-center">
+        <div class="d-flex">
+            <mat-card class="dist-start"  (click)="start();">
+                <mat-card-header>
+                    <mat-card-title>Create Your own token</mat-card-title>
+                </mat-card-header>
+                <img mat-card-image src="./assets/img/coin.png" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                    <p>
+                        Customize and create Your own token without any Solidity knowledge , only by typing and clicking. 
+                    </p>
+                </mat-card-content>
+            </mat-card>
+            <a routerLink="/dropper">
+            <mat-card class="dist-start"  (click)="start();">
+                <mat-card-header>
+                    <mat-card-title>Distribute Your tokens</mat-card-title>
+                </mat-card-header>
+                <img mat-card-image src="./assets/img/dropper.png" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                    <p>
+                        Import CSV file or type data contains addresses and balances and easly distribute tokens using
+                        Metamask and ETHToolKit.
+                    </p>
+                </mat-card-content>
+            </mat-card>
+        </a>
+        </div>
+    </div>
+</div>
