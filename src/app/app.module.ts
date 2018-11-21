@@ -66,14 +66,15 @@ import { DropPackageComponent } from './components/controls/dropPackage/dropPack
 import { DropperComponent } from './components/dropper/dropper.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { CreatorComponent } from './components/creator/creator.component';
+import { NetworkGuard } from './services/network.guard';
 
 
 
 const appRoutes: Routes = [
-  { path: 'dropper', component: DropperComponent },
+  { path: 'dropper', component: DropperComponent , canActivate: [NetworkGuard]},
   { path: 'home', component: HomeComponent },
   { path: 'terms', component: TermsComponent },
-  { path: 'creator', component: CreatorComponent },
+  { path: 'creator', component: CreatorComponent , canActivate: [NetworkGuard]},
   { path: 'dropperFaq', component: DropperFaq },
   { path: '',
     redirectTo: '/home',
@@ -152,7 +153,8 @@ const appRoutes: Routes = [
     DropperContextService,
     AirdropDataService,
     HelperService,
-    ContextWorkerService
+    ContextWorkerService,
+    NetworkGuard
    ],
   bootstrap: [AppComponent]
 })

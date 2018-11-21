@@ -10,20 +10,12 @@ import { ServiceEvent } from 'src/app/models/serviceEvent';
 export class HomeComponent {
 
   isReady: boolean = false;
-  networkNotSupported = false;
 
   constructor(private _ethereumService: EthereumService) {
     this._ethereumService.OnStateChanged().subscribe((result) => this.handleStateChanged(result));
   }
 
   public handleStateChanged(data) {
-    if (data.event == ServiceEvent.AccountChanged) {
-      if (data.isReady && this._ethereumService.isSupportedNetwork())
-        this.isReady = true;
-      else
-        this.isReady = false;
-
-    }
-
+    this.isReady = data.isReady;
   }
 }

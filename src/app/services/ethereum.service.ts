@@ -16,6 +16,7 @@ export class EthereumService {
     public web3: any;
 
     public currentAccount: string = "";
+    public isReady = false;
 
     public accountChanged: BehaviorSubject<any> = new BehaviorSubject("No account detected.");
 
@@ -111,6 +112,7 @@ export class EthereumService {
                     this.internalState = 3;
                     this._zone.run(() => {
                         this.currentAccount = "";
+                        this.isReady = false;
                         this.stateChanged.next({ event: ServiceEvent.AccountNotFound , isReady:false})
                     });
                 }
@@ -118,6 +120,7 @@ export class EthereumService {
                     this.internalState = 1;
                     this._zone.run(() => {
                         this.currentAccount = "";
+                        this.isReady = false;
                         this.stateChanged.next({ event: ServiceEvent.AccountNotFound , isReady:false})
                     });
                 }
@@ -136,8 +139,12 @@ export class EthereumService {
     private handleAccountChanged(accs: any) {
         let lastAccount = this.currentAccount;
         this.currentAccount = accs[0];
-
-        this.stateChanged.next({ event: ServiceEvent.AccountChanged, lastAccount: lastAccount, newAccount: this.currentAccount , isReady:true});
+        this.isReady = this.isSupportedNetwork();
+        this.stateChanged.next({ 
+            event: ServiceEvent.AccountChanged, 
+            lastAccount: lastAccount, 
+            newAccount: this.currentAccount , 
+            isReady:this.isReady});
     }
 
     public OnStateChanged = (): Observable<any> => {
