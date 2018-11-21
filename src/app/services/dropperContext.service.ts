@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { ERC20 } from "../core/erc20";
-import { Dropper } from "../core/dropper";
+import { ERC20 } from "../core/contracts/erc20";
+import { Dropper } from "../core/contracts/dropper";
 import { EthereumService } from "./ethereum.service";
 import { AirdropDataService } from "./airdropData.service";
 import { TokenData } from "../models/tokenData.model";
@@ -8,7 +8,7 @@ import { Airdrop } from "../models/airdrop.model";
 import { AirdropWorker } from "../core/airdropWorker";
 
 @Injectable()
-export class GlobalContextService {
+export class DropperContextService {
 
     protected state: ContextState;
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output} from '@angular/core';
-import { GlobalContextService } from '../../../services/globalContext.service';
+import { DropperContextService } from '../../../services/dropperContext.service';
 import { environment } from '../../../../environments/environment';
 
 
@@ -15,7 +15,7 @@ export class DropPackageComponent implements OnInit {
   @Output() resetClick: EventEmitter<any> = new EventEmitter<any>(); //creating an output event
 
   constructor(
-    public context: GlobalContextService) { }
+    public context: DropperContextService) { }
 
   ngOnInit() {
    

@@ -49,9 +49,6 @@ contract('ContractFactory', function (accounts) {
         var owner = await contractInstance.owner();
 
         owner.should.be.equals(accounts[1]);
-
-        console.log(logs)
-
     });
 
 });

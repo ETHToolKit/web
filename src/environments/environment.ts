@@ -10,12 +10,12 @@ export const environment = {
   etherscanTx:"https://rinkeby.etherscan.io/tx/",
   etherscanTxMainnet:"https://etherscan.io/tx/",
   firebase: {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: ""
+    apiKey: "AIzaSyCcgNyNC21ICe66zh8PjozBHU0cbcNwpyA",
+    authDomain: "ethtoolkit.firebaseapp.com",
+    databaseURL: "https://ethtoolkit.firebaseio.com",
+    projectId: "ethtoolkit",
+    storageBucket: "ethtoolkit.appspot.com",
+    messagingSenderId: "551656511388"
   }
 };
 

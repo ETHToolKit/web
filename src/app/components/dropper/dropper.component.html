@@ -6,7 +6,7 @@
     <div class="col-md-12 col-lg-10 col-xl-6">
       <div class='col-sm-12 mt-2'>
         <div class="token">
-          <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper *ngIf="!noMetamask && !noAccount && !notSupportedNetwork"
+          <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper 
             [linear]="true">
             <mat-step #stepOne [stepControl]="tokenInfoForm" [completed] = false>
               <ng-template matStepLabel>Token address</ng-template>
@@ -25,25 +25,10 @@
               <dropPackage (resetClick)="stepper.reset();reset();" ></dropPackage>
             </mat-step>
           </mat-horizontal-stepper>
-          <div class="mt-4">
-            <div *ngIf="!notSupportedNetwork && noAccount && !loading && !noMetamask" class="col-lg-12 col-md-12 col-sm-12 text-center metamask">
-              <p><img src="./assets/img/metamask.png" height="200"></p>
-              <h2>Please unlock Metamask account</h2>
-            </div>
-            <div *ngIf="!notSupportedNetwork &&  !loading && noMetamask" class="col-lg-12 col-md-12 col-sm-12 text-center metamask">
-              <p><img src="./assets/img/metamask.png" height="200"></p>
-              <h2>Please install Metamask</h2>
-            </div>
-            <div *ngIf="notSupportedNetwork && !loading" class="col-lg-12 col-md-12 col-sm-12 text-center metamask">
-              <p><img src="./assets/img/metamask.png" height="200"></p>
-              <h2>Current network not supported</h2>
-            </div>
-          </div>
         </div>
       </div>
     </div>
     <div class="col-md-0 col-lg-1 col-xl-3">
-
     </div>
   </div>
  

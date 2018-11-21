@@ -68,6 +68,7 @@ nav .network {
 .home .dist-start {
     max-width: 300px;
     min-width: 250px;
+    min-height: 430px;
     margin:10px;
 }
 
@@ -81,8 +82,10 @@ nav .network {
 .home .dist-start:hover {
     background-color:  rgba(243, 243, 243, 0.4);
     cursor: pointer;
-    
-    
+}
+
+.app .issueText {
+    color: rgba(27, 27, 27, 0.65);
 }
 
 nav .social-icons {
@@ -102,6 +105,10 @@ nav .menu-item:hover {
 .mat-stepper-horizontal, .mat-stepper-vertical {
     margin-top:40px;
 }
+a.adisabled {
+    cursor: not-allowed;
+    opacity: .65;
+  }
 
 
 

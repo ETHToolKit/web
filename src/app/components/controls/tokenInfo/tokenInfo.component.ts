@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { GlobalContextService } from '../../../services/globalContext.service';
+import { DropperContextService } from '../../../services/dropperContext.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContextWorkerService } from 'src/app/services/contextWorker.service';
 import { MatStep } from '@angular/material';
@@ -24,7 +24,7 @@ export class TokenInfoComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private contextWorker:ContextWorkerService,
-    public context:GlobalContextService) { }
+    public context:DropperContextService) { }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({

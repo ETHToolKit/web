@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Host, Input } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatStep } from '@angular/material';
-import { GlobalContextService } from '../../../services/globalContext.service';
+import { DropperContextService } from '../../../services/dropperContext.service';
 import { AirdropItem } from '../../../models/airdropItem.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ContextWorkerService } from 'src/app/services/contextWorker.service';
@@ -34,7 +34,7 @@ export class DataImporterComponent implements OnInit {
         private _formBuilder: FormBuilder,
 
         private worker: ContextWorkerService,
-        public context: GlobalContextService) { }
+        public context: DropperContextService) { }
 
     ngOnInit() {
         this.secondFormGroup = this._formBuilder.group({

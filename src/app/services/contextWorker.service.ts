@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { EthereumService } from './ethereum.service';
-import { GlobalContextService } from './globalContext.service';
+import { DropperContextService } from './dropperContext.service';
 import { HelperService } from './helper.service';
-import { ERC20 } from '../core/erc20';
+import { ERC20 } from '../core/contracts/erc20';
 import BigNumber from 'bignumber.js';
 import { AirdropDataService } from './airdropData.service';
 import { AirdropItem } from '../models/airdropItem.model';
@@ -12,7 +12,7 @@ import { AirdropWorker } from '../core/airdropWorker';
 export class ContextWorkerService {
 
   constructor(
-    private context: GlobalContextService,
+    private context: DropperContextService,
     private _helper: HelperService,
     private _airdropDataService: AirdropDataService,
     private _ethereumService:EthereumService) { 

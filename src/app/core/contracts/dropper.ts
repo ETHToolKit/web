@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EthereumService } from '../services/ethereum.service';
+import { EthereumService } from '../../services/ethereum.service';
 import BigNumber from 'bignumber.js';
 
 export class Dropper {

@@ -1,7 +1,7 @@
 import { EthereumService } from "../services/ethereum.service";
 import { TransactionTracker } from "./transactionTracker";
 import { AirdropData } from "./airdropData";
-import { GlobalContextService } from "../services/globalContext.service";
+import { DropperContextService } from "../services/dropperContext.service";
 import BigNumber from "bignumber.js";
 import { environment } from '../../environments/environment';
 
@@ -16,7 +16,7 @@ export class AirdropWorker {
     constructor(
         private _ethereumService: EthereumService,
         public data: AirdropData,
-        private _context: GlobalContextService,
+        private _context: DropperContextService,
         public addDonation: boolean
     ) {
 

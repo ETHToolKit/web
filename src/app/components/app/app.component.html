@@ -1,29 +1,33 @@
 <nav class="navbar  sticky-top  navbar-expand-lg navbar-light bg-light">
-    <i class="fas fa-hammer mr-3 fa-2x"></i><a class="navbar-brand" href="#">ETH TOOLKIT</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-    aria-label="Toggle navigation">
+  <i class="fas fa-hammer mr-3 fa-2x"></i><a class="navbar-brand" routerLink="/home">ETH TOOLKIT</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav  mr-auto">
-        <li class="nav-item ">
-            <a class="nav-link" routerLink="/tokenCreator">Token creator
-              <span class="sr-only">(current)</span>
-            </a>
-        </li>
+      <li class="nav-item ">
+        <a class="nav-link" routerLink="/creator">Token creator
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
       <li class="nav-item ">
         <a class="nav-link" routerLink="/dropper">Dropper
           <span class="sr-only">(current)</span>
         </a>
       </li>
-    
+
     </ul>
-    <a class="social-icons" href="mailto:info@ethtoolkit.io" ><i class="fas fa-envelope"></i></a>
+    <a class="social-icons" href="mailto:info@ethtoolkit.io"><i class="fas fa-envelope"></i></a>
     <a class="social-icons" href="https://github.com/ETHToolKit" target="_blank"><i class="fab fa-github fa-lg"></i></a>
     <div class="network navbar-text">
-       | {{networkDescription}}
+      | {{networkDescription}}
     </div>
   </div>
 </nav>
-<router-outlet></router-outlet>
 
+<div *ngIf="isReady == 1" class="sticky-top text-center" style="background-color: bisque;">
+  <img src="./assets/img/metamask.png" class="p-3 " height="70"><span class="issueText">{{issueText}}</span>
+</div>
+
+<router-outlet ></router-outlet>

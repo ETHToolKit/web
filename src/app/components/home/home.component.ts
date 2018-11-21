@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { EthereumService } from 'src/app/services/ethereum.service';
+import { ServiceEvent } from 'src/app/models/serviceEvent';
 
 @Component({
   selector: 'home',
@@ -7,7 +9,20 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
-  constructor() {
+  isReady:boolean;
 
+  constructor(private _ethereumService: EthereumService) {
+    this._ethereumService.OnStateChanged().subscribe((result) => this.handleStateChanged(result));
+  }
+
+  public handleStateChanged(data) {
+    if (data.event == ServiceEvent.AccountChanged) {
+      if (data.lastAccount == "" && data.lastAccount != data.newAccount)
+        this.isReady = true;
+     
+    }
+    else {
+      this.isReady = false;
+    }
   }
 }

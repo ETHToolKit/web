@@ -52,7 +52,7 @@ import { EthereumService } from './services/ethereum.service';
 import { HelperService } from './services/helper.service';
 import { NormalizerPipe } from './pipes/normalizer.pipe';
 import { DataImporterComponent } from './components/controls/dataImporter/dataImporter.component';
-import { GlobalContextService } from './services/globalContext.service';
+import { DropperContextService } from './services/dropperContext.service';
 import { AirdropDataService } from './services/airdropData.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -146,7 +146,7 @@ const appRoutes: Routes = [
   ],
   providers: [
     EthereumService,
-    GlobalContextService,
+    DropperContextService,
     AirdropDataService,
     HelperService,
     ContextWorkerService

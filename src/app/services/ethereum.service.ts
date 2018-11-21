@@ -3,16 +3,11 @@ import { Injectable, NgZone } from '@angular/core';
 import * as Web3 from 'web3';
 import BigNumber from 'bignumber.js';
 import { ServiceEvent } from '../models/serviceEvent';
-import { environment } from '../../environments/environment';
 
 declare let Web3: any;
 declare let window: any;
 declare let location: any;
 
-enum Status {
-    Online,
-    Offline
-}
 
 @Injectable()
 export class EthereumService {
@@ -52,6 +47,7 @@ export class EthereumService {
         if (window.ethereum) {
             window.web3 = new Web3(window.ethereum);
             // Request account access if needed
+            this.stateChanged.next({ event: ServiceEvent.WaitingForAcceptance });
             window.ethereum.enable().then(() => {
                 this.web3 = window.web3;
                 this.networkId = this.web3.version.network;

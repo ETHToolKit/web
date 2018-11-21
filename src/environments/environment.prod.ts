@@ -5,13 +5,12 @@ export const environment = {
   testToken:"0x75d0462e6ebd792d2873d4d3c0710df326d4ba17",
   etherscanTx:"https://rinkeby.etherscan.io/tx/",
   etherscanTxMainnet:"https://etherscan.io/tx/",
-  network:'rinkeby',
   firebase: {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: ""
+    apiKey: "AIzaSyCcgNyNC21ICe66zh8PjozBHU0cbcNwpyA",
+    authDomain: "ethtoolkit.firebaseapp.com",
+    databaseURL: "https://ethtoolkit.firebaseio.com",
+    projectId: "ethtoolkit",
+    storageBucket: "ethtoolkit.appspot.com",
+    messagingSenderId: "551656511388"
   }
 };

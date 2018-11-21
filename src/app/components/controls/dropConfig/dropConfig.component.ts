@@ -1,5 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
-import { GlobalContextService } from '../../../services/globalContext.service';
+import { DropperContextService } from '../../../services/dropperContext.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EthereumService } from 'src/app/services/ethereum.service';
 import { TransactionTracker } from 'src/app/core/transactionTracker';
@@ -28,7 +28,7 @@ export class DropConfigComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    public context: GlobalContextService,
+    public context: DropperContextService,
     private worker:ContextWorkerService,
     private _ethereumService: EthereumService) { }
 

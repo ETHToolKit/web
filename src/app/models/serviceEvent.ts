@@ -4,5 +4,6 @@ export enum ServiceEvent {
     MetamaskDetectedWrongNetwork,
     MetamaskNotDetected,
     AccountChanged,
-    AccountNotFound
+    AccountNotFound,
+    WaitingForAcceptance
 }

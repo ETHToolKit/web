@@ -1,7 +1,7 @@
 pragma solidity ^0.4.24;
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "./Withdrawable.sol";
 
-contract ContractFactory is Ownable {
+contract ContractFactory is Withdrawable {
 
     event ContractCreated(address newContract);
     event TemplateAdded(string templateName, address templateAddress);
@@ -9,17 +9,17 @@ contract ContractFactory is Ownable {
     mapping (bytes32=>address) public templates;
 
     function addTemplate(string templateName, address _contractTemplate) public onlyOwner{
-        require(templates[keccak256(templateName)] == address(0), "Template exists");
-        templates[keccak256(templateName)] = _contractTemplate;
+        require(templates[keccak256(abi.encodePacked(templateName))] == address(0), "Template exists");
+        templates[keccak256(abi.encodePacked(templateName))] = _contractTemplate;
 
         emit TemplateAdded(templateName, _contractTemplate);
     }
 
     function getTemplate(string templateName) public view returns(address) {
-        return  templates[keccak256(templateName)];
+        return  templates[keccak256(abi.encodePacked(templateName))];
     } 
 
-    function create(address _srcCode) public returns (address){
+    function create(address _srcCode) private returns (address){
         address retval;
 
         assembly {
@@ -30,11 +30,12 @@ contract ContractFactory is Ownable {
         return retval;
     }
 
-    function createContract(string _type, bytes params) external {
-        require(templates[keccak256(_type)]!=address(0),"Template is missing");
+    function createContract(string _type, bytes params) external payable {
+        require(templates[keccak256(abi.encodePacked(_type))]!=address(0),"Template is missing");
         address newContract = create(templates[keccak256(_type)]);
 
         emit ContractCreated(address(newContract));
         newContract.call(params);
     }
+
 }

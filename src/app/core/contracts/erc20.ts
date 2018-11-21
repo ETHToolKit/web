@@ -1,9 +1,9 @@
-import { EthereumService } from "../services/ethereum.service";
-import { ERC20Token } from '../models/ERC20token.model';
+import { EthereumService } from "../../services/ethereum.service";
+import { ERC20Token } from '../../models/ERC20token.model';
 import BigNumber from "bignumber.js";
 declare let require: any;
 
-const erc20ABI: any = require('../../assets/erc20.json');
+const erc20ABI: any = require('../../../assets/erc20.json');
 
 export class ERC20 {
 
