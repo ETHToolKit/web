@@ -5,7 +5,94 @@
     </div>
     <div class="col-md-12 col-lg-10 col-xl-6">
       <div class='col-sm-12 mt-2'>
-        
+          <div class="token">
+              <mat-horizontal-stepper #stepperCreator [linear]="true">
+                
+                <mat-step #stepOneCreator  >
+                  <ng-template matStepLabel>Chose token type</ng-template>
+                  <mat-form-field style="width: 300px;">
+                      <mat-select    [(value)]="tokenType" (selectionChange)="tokenTypeChanged($event)" placeholder="Token type" >
+                        <mat-option value="standard">Standard ERC-20 token</mat-option>
+                        <mat-option value="mintable">Mintable ERC-20 token</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <div class="mt-3">
+                        <button  mat-raised-button matStepperNext>Next</button>
+                      </div>
+                </mat-step>
+                <mat-step #stepTwoCreator [completed] = true>
+                 
+                  <ng-template matStepLabel>Configure token</ng-template>
+                  <mat-form-field class="mr-3"  style="width: 200px;">
+                    <input style="font-size: 20px;"  [(ngModel)]="name" 
+                      [ngModelOptions]="{standalone: true}"  (change)="nameChange()" matInput placeholder="Name" required>
+                  </mat-form-field>
+                  <mat-form-field class="mr-3"  style="width: 200px;">
+                    <input style="font-size: 20px;"  [(ngModel)]="symbol" 
+                      [ngModelOptions]="{standalone: true}" min="0" (change)="symbolChange()" matInput placeholder="Symbol" required>
+                  </mat-form-field>
+                 
+                  <mat-form-field class="mr-3" *ngIf="tokenType == 'standard'" (change)="totalSupplyChange()"  style="width: 200px;">
+                    <input style="font-size: 20px;" OnlyNumber="true" [(ngModel)]="totalSupply" 
+                      [ngModelOptions]="{standalone: true}" min="0" matInput placeholder="Total Supply" type="number" required>
+                  </mat-form-field>
+                  <mat-divider class="mb-4"></mat-divider>
+                  <label class="mr-4">Any donation ? </label>
+                  <mat-form-field class="mr-3"  style="width: 200px;">
+                    <input style="font-size: 20px;" OnlyNumber="true" [(ngModel)]="donation" 
+                      [ngModelOptions]="{standalone: true}" min="0" matInput placeholder="Amount" type="number">
+                    <span matSuffix>ETH</span>
+                  </mat-form-field>
+                  <div class="mt-3">
+                    <button class="mr-3" mat-raised-button matStepperPrevious>Back</button>
+                    <button *ngIf="canGoNext()" mat-raised-button matStepperNext>Next</button>
+                  </div>
+         
+                </mat-step>
+                <mat-step #stepThreeCreator  >
+                  <ng-template matStepLabel>Deploy</ng-template>
+                  <mat-card  class="mb-3">
+                    <div style="float: right;" *ngIf="status == 1">
+                      <mat-spinner></mat-spinner>
+                    </div>
+                    <div style="float: right;" *ngIf="status == 2">
+                      <i style="color: green;" class="far fa-check-circle fa-5x"></i>
+                    </div>
+                    <div style="float: right;" *ngIf="status == 3">
+                      <i style="color: red;" class="fas fa-exclamation-circle fa-5x"></i>
+                    </div>
+                  
+                    <mat-card-header>
+                      <mat-card-title>Summary</mat-card-title>
+                      <mat-card-subtitle>Name : {{name}}</mat-card-subtitle>
+                      <mat-card-subtitle>Symbol : {{symbol}} </mat-card-subtitle>
+                      <mat-card-subtitle>Decimals : {{decimals}} </mat-card-subtitle>
+                      <mat-card-subtitle>Total supply : {{totalSupply}} {{symbol}}</mat-card-subtitle>
+                      <mat-card-subtitle *ngIf="transactionTx">
+                        <a style="font-size:14px" target="_blank" href="{{transactionTx}}">
+                          {{(transactionTx) | slice:0:60}}...
+                        </a>
+                      </mat-card-subtitle>
+                      <mat-card-subtitle *ngIf="status == 3">
+                        <label style="font-size:14px;">Error : {{worker.error}}</label>
+                      </mat-card-subtitle>
+                      <mat-card-subtitle style="color: green" *ngIf="donation">Include
+                        donation : {{donation}} ETH</mat-card-subtitle>
+                    </mat-card-header>
+                  
+                    <mat-card-actions *ngIf="status == 0 || status == 3 ">
+                      <button mat-raised-button class="ml-4 mb-4" (click)="deploy()" color="primary">Deploy</button>
+                    </mat-card-actions>
+                  
+                  </mat-card>
+                  <div>
+                    <button class="mr-3 mt-3" mat-raised-button matStepperPrevious>Back</button>
+                    <button mat-raised-button (click)="stepperCreator.reset();reset();">Reset</button>
+                  </div>
+                </mat-step>
+               
+              </mat-horizontal-stepper>
+            </div>
       </div>
     </div>
     <div class="col-md-0 col-lg-1 col-xl-3">
