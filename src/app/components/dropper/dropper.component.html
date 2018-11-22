@@ -8,7 +8,7 @@
         <div class="token">
           <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper 
             [linear]="true">
-            <mat-step #stepOne [stepControl]="tokenInfoForm" [completed] = false>
+            <mat-step #stepOne  [completed] = false>
               <ng-template matStepLabel>Token address</ng-template>
               <tokenInfo [step]="stepOne"></tokenInfo>
             </mat-step>
@@ -16,7 +16,7 @@
               <ng-template matStepLabel>Fill out your airdrop data</ng-template>
               <dataImporter [step]="stepTwo"></dataImporter>
             </mat-step>
-            <mat-step #stepThree [stepControl]="thirdFormGroup" [completed] = false>
+            <mat-step #stepThree  [completed] = false>
               <ng-template matStepLabel>Configure</ng-template>
               <dropConfig [step]="stepThree"></dropConfig>
             </mat-step>
