@@ -7,6 +7,7 @@ import { TransactionTracker } from 'src/app/core/transactionTracker';
 import { environment } from '../../../../environments/environment';
 import { ContextWorkerService } from 'src/app/services/contextWorker.service';
 import { MatStep } from '@angular/material';
+import { EtherscanService } from 'src/app/services/etherscan.service';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class DropConfigComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
+    private _etherscanService:EtherscanService,
     public context: DropperContextService,
     private worker:ContextWorkerService,
     private _ethereumService: EthereumService) { }
@@ -74,11 +76,7 @@ export class DropConfigComponent implements OnInit {
     try {
       this.allowanceStatus = 1;
       var tx = await this.context.erc20.approve(this.context.dropper.address, value);
-
-      if(this._ethereumService.isMainnet())
-        this.approveTx = environment.etherscanTxMainnet + tx;
-      else
-        this.approveTx = environment.etherscanTx + tx;
+      this.approveTx = this._etherscanService.getTransactionLink( tx);
       
       new TransactionTracker(tx, this._ethereumService, 180, 1, async (err, result) => {
         if (err) {

@@ -7,6 +7,7 @@ import BigNumber from 'bignumber.js';
 import { AirdropDataService } from './airdropData.service';
 import { AirdropItem } from '../models/airdropItem.model';
 import { AirdropWorker } from '../core/airdropWorker';
+import { EtherscanService } from './etherscan.service';
 
 @Injectable()
 export class ContextWorkerService {
@@ -14,6 +15,7 @@ export class ContextWorkerService {
   constructor(
     private context: DropperContextService,
     private _helper: HelperService,
+    private _etherscanService:EtherscanService,
     private _airdropDataService: AirdropDataService,
     private _ethereumService:EthereumService) { 
 
@@ -88,7 +90,7 @@ export class ContextWorkerService {
         var pack = this.context.airdrop.airdropPackages;
         var data = new Array<AirdropWorker>() ;
         for(var i=0;i<pack.length;i++) {
-            data.push(new AirdropWorker(this._ethereumService, pack[i], this.context, i==0));
+            data.push(new AirdropWorker(this._ethereumService, this._etherscanService, pack[i], this.context, i==0));
         }
 
         this.context.airdropWorkers = data;

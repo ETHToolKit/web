@@ -12,7 +12,7 @@
             <mat-step #stepOneCreator>
               <ng-template matStepLabel>Chose token type</ng-template>
               <mat-form-field style="width: 300px;">
-                <mat-select [(value)]="tokenType" (selectionChange)="tokenTypeChanged($event)" placeholder="Token type">
+                <mat-select [(value)]="tokenType" (selectionChange)="tokenTypeChanged($event)" #tokenTypeControl placeholder="Token type">
                   <mat-option value="standard">Standard ERC-20 token</mat-option>
                   <mat-option value="mintable">Mintable ERC-20 token</mat-option>
                 </mat-select>
@@ -72,7 +72,7 @@
 
                 <mat-card-header>
                   <mat-card-title>Summary</mat-card-title>
-                  <mat-card-subtitle>Type : {{stepTwoCreatorForm.controls.name.value}}</mat-card-subtitle>
+                  <mat-card-subtitle>Type : {{tokenTypeControl.value}} </mat-card-subtitle>
                   <mat-card-subtitle>Name : {{stepTwoCreatorForm.controls.name.value}}</mat-card-subtitle>
                   <mat-card-subtitle>Symbol : {{stepTwoCreatorForm.controls.symbol.value}} </mat-card-subtitle>
                   <mat-card-subtitle>Decimals : {{stepTwoCreatorForm.controls.decimals.value}} </mat-card-subtitle>
@@ -83,7 +83,7 @@
                     </a>
                   </mat-card-subtitle>
                   <mat-card-subtitle *ngIf="newTokenAddress" style="color: green">
-                      New token address : <a style="font-size:14px" target="_blank" href="{{newTokenAddressHref}}">
+                      New token address : <a style="font-size:14px" matTooltip="It will be visible on etherscan after couple of seconds ( sync )"  target="_blank" href="{{newTokenAddressHref}}">
                         {{newTokenAddress}}
                       </a>
                     </mat-card-subtitle>
