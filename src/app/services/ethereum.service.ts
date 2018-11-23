@@ -33,8 +33,8 @@ export class EthereumService {
 
     public getNetwork(): string {
         switch (this.networkId) {
-            case "1": return "Mainnet";
-            case "4": return "Rinkeby";
+            case "1": return "mainnet";
+            case "4": return "rinkeby";
             default: return "";
         }
     }
@@ -59,7 +59,7 @@ export class EthereumService {
 
                 console.log("Network ", this.getNetwork());
 
-                if (this.getNetwork().toLowerCase() == 'rinkeby' || this.getNetwork().toLowerCase() == 'mainnet') {
+                if (this.getNetwork()== 'rinkeby' || this.getNetwork() == 'mainnet') {
                     this.stateChanged.next({ event: ServiceEvent.MetamaskDetected , isReady:false});
                     this.subUpdateState = timer(400, 1000).subscribe(() => this.updateState());
                 } else {
@@ -78,7 +78,7 @@ export class EthereumService {
             this._zone.run(() => {
                 console.log("Network ", this.getNetwork());
 
-                if (this.getNetwork().toLowerCase() == 'rinkeby' || this.getNetwork().toLowerCase() == 'mainnet') {
+                if (this.getNetwork() == 'rinkeby' || this.getNetwork() == 'mainnet') {
                     this.stateChanged.next({ event: ServiceEvent.MetamaskDetected , isReady:false});
                     this.subUpdateState = timer(400, 1000).subscribe(() => this.updateState());
                 } else {
