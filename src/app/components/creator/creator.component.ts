@@ -10,9 +10,10 @@ import { DropConfigComponent } from '../controls/dropConfig/dropConfig.component
 import { DropPackageComponent } from '../controls/dropPackage/dropPackage.component';
 import { MatStepper, MatStep } from '@angular/material';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ContractFactory } from 'src/app/core/contracts/contractFactory';
 import { TransactionTracker } from 'src/app/core/transactionTracker';
+import { EtherscanService } from 'src/app/services/etherscan.service';
 
 
 
@@ -24,32 +25,33 @@ import { TransactionTracker } from 'src/app/core/transactionTracker';
 export class CreatorComponent implements OnInit {
 
     public tokenType = "standard";
-    public decimals: number = 18;
-    public symbol: string;
-    public name: string;
-    public totalSupply: number;
+
     public status = 0;
     public transactionTx = null;
     public error = null;
+    public newTokenAddress = null;
+    public newTokenAddressHref = null;
 
-    public donation: number;
-
-    fromGroupCreator: FormGroup;
-
-    public factory: ContractFactory;
 
     @ViewChild(MatStep) stepTwoCreator: MatStep;
+    @ViewChild(MatStep) stepOneCreator: MatStep;
+    @ViewChild(MatStep) stepThreeCreator: MatStep;
+
+    stepTwoCreatorForm: FormGroup;
 
     constructor(
         private _formBuilder: FormBuilder,
+        private _etherescanService:EtherscanService,
         private _ethereumService: EthereumService) {
         this._ethereumService.OnStateChanged().subscribe((result) => this.handleStateChanged(result));
 
-        this.fromGroupCreator = this._formBuilder.group({
-
+        this.stepTwoCreatorForm = this._formBuilder.group({
+            name: ['', Validators.required],
+            symbol: ['', Validators.required],
+            totalSupply: [1000000, Validators.required,],
+            decimals: [18, [Validators.required, Validators.max(77), Validators.min(0)]],
+            donation: [''],
         });
-
-
     }
 
     async ngOnInit() {
@@ -58,37 +60,35 @@ export class CreatorComponent implements OnInit {
 
     public tokenTypeChanged(event: any) {
         this.reset();
-    }
 
-    public nameChange() {
-    }
+        if (this.tokenType != 'standard') {
+            this.stepTwoCreatorForm.removeControl("totalSupply");
+        }
+        else {
+            this.stepTwoCreatorForm.addControl("totalSupply", new FormControl('', Validators.required))
+        }
 
-    public symbolChange() {
-    }
-
-    public totalSupplyChange() {
     }
 
     public async deploy() {
-        var tx;
-        this.status = 1;
 
-        if (this.tokenType == 'standard') {
+        try {
+            var tx;
+            this.status = 1;
 
-            var params = this.factory.createTokenParams(this.decimals, this.name, this.symbol,
-                this._ethereumService.getAccount(), false, this.totalSupply);
-            tx = await this.factory.createContract("MintableToken", params, this.donation);
+            var decimals = this.stepTwoCreatorForm.controls.decimals.value;
+            var name = this.stepTwoCreatorForm.controls.name.value;
+            var totalSupply = this.stepTwoCreatorForm.controls.totalSupply.value;
+            var symbol = this.stepTwoCreatorForm.controls.symbol.value;
+            var donation = this.stepTwoCreatorForm.controls.donation.value;
 
-        } else {
-            var params = this.factory.createTokenParams(this.decimals, this.name, this.symbol,
-                this._ethereumService.getAccount(), false, 0);
-            tx = await this.factory.createContract("MintableToken", params, this.donation);
-        }
+            var factory = this.getFactoryInstance();
 
-        if (this._ethereumService.isMainnet())
-            this.transactionTx = environment.etherscanTxMainnet + tx;
-        else
-            this.transactionTx = environment.etherscanTx + tx;
+            var params = factory.createTokenParams(decimals, name, symbol,
+                this._ethereumService.getAccount(), this.tokenType == 'standard', totalSupply);
+            tx = await factory.createContract("MintableToken", params, donation);
+
+            this.transactionTx = this._etherescanService.getTransactionLink(tx);
 
             new TransactionTracker(tx, this._ethereumService, 180, 0, async (err, result) => {
                 if (err) {
@@ -99,22 +99,27 @@ export class CreatorComponent implements OnInit {
                 else {
                     if (result.ready) {
                         this.status = 2;
+                        this.newTokenAddress = result.recipe.logs[0].address;
+                        this.newTokenAddressHref = 
+                            this._etherescanService.getAddressLink(this.newTokenAddress);
+
                     }
                 }
             });
+        }
+        catch (ex) {
+            this.status = 3;
+            this.error = ex;
+        }
 
     }
 
-    public canGoNext() {
+    public getFactoryInstance(): ContractFactory {
 
-        if (this.tokenType == 'standard') {
-            var canGo = this.name != null && this.symbol != null && this.totalSupply != null;
-            return canGo;
-        }
-        else {
-            var canGo = this.name != null && this.symbol != null;
-            return canGo;
-        }
+        if (this._ethereumService.isMainnet())
+            return new ContractFactory(environment.contractFactoryMainnet, this._ethereumService);
+        else
+            return new ContractFactory(environment.contractFactory, this._ethereumService);
 
     }
 
@@ -124,22 +129,19 @@ export class CreatorComponent implements OnInit {
         }
 
         if (data.isReady) {
-            if (this._ethereumService.isMainnet())
-                this.factory = new ContractFactory(environment.contractFactoryMainnet, this._ethereumService);
-            else
-                this.factory = new ContractFactory(environment.contractFactory, this._ethereumService);
+
         }
     }
 
     public reset() {
-
-        this.decimals = 18;
-        this.symbol = null;
-        this.name = null;
-        this.totalSupply = null;
+        if (this.stepTwoCreatorForm) {
+            this.stepTwoCreatorForm.controls.decimals.setValue(18);
+            this.stepTwoCreatorForm.controls.totalSupply.setValue(1000000);
+        }
         this.status = 0;
         this.transactionTx = null;
-        this.donation = null;
+        this.newTokenAddressHref = null;
+        this.newTokenAddress = null;
         this.error = null;
     }
 }

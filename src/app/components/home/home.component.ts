@@ -18,7 +18,7 @@ export class HomeComponent {
 
   public handleStateChanged(data) {
     this.isReady = data.isReady;
-    this.showToken = this._ethereumService.getNetwork() == "Rinkeby";
+    this.showToken = this._ethereumService.getNetwork() == "rinkeby";
     
   }
 }

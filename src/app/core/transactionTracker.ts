@@ -38,7 +38,7 @@ export class TransactionTracker {
                     this.txBlockNumber = result.blockNumber;
 
                     this._ethereum.web3.eth.getTransactionReceipt(this.txID, (err: any, recipe: any) => {
-                        console.log(recipe)
+                        console.log("AAAAAA................." + JSON.stringify(recipe));
                         if (recipe.gasUsed < 100) {
                             this.subscribtion.unsubscribe();
                             this.callback("Code not executed. Out of gas.", null);
@@ -52,7 +52,7 @@ export class TransactionTracker {
                             if (this.blockConfirmationNumber == 0 ) {
                                 if(result.blockNumber >= this.txBlockNumber) {
                                     this.subscribtion.unsubscribe();
-                                    this.callback(null, {ready:true});
+                                    this.callback(null, {ready:true, recipe:recipe});
                                 }
                             }
                             else

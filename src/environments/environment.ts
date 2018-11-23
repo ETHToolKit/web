@@ -9,8 +9,6 @@ export const environment = {
   contractFactory:"0xab6572f241af091084ba254dad4eac91a82def40",
   contractFactoryMainnet:"",
   testToken:"0x75d0462e6ebd792d2873d4d3c0710df326d4ba17",
-  etherscanTx:"https://rinkeby.etherscan.io/tx/",
-  etherscanTxMainnet:"https://etherscan.io/tx/",
   firebase: {
     apiKey: "AIzaSyCcgNyNC21ICe66zh8PjozBHU0cbcNwpyA",
     authDomain: "ethtoolkit.firebaseapp.com",

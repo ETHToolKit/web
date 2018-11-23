@@ -67,6 +67,7 @@ import { DropperComponent } from './components/dropper/dropper.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { CreatorComponent } from './components/creator/creator.component';
 import { NetworkGuard } from './services/network.guard';
+import { EtherscanService } from './services/etherscan.service';
 
 
 
@@ -154,7 +155,8 @@ const appRoutes: Routes = [
     AirdropDataService,
     HelperService,
     ContextWorkerService,
-    NetworkGuard
+    NetworkGuard,
+    EtherscanService
    ],
   bootstrap: [AppComponent]
 })

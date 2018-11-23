@@ -4,6 +4,7 @@ import { AirdropData } from "./airdropData";
 import { DropperContextService } from "../services/dropperContext.service";
 import BigNumber from "bignumber.js";
 import { environment } from '../../environments/environment';
+import { EtherscanService } from "../services/etherscan.service";
 
 export class AirdropWorker {
 
@@ -15,6 +16,7 @@ export class AirdropWorker {
 
     constructor(
         private _ethereumService: EthereumService,
+        private _etherscanService: EtherscanService,
         public data: AirdropData,
         private _context: DropperContextService,
         public addDonation: boolean
@@ -42,11 +44,8 @@ export class AirdropWorker {
                 this.data.totalToDropRaw.toString(10),
                 value.toString(10));
 
-            if (this._ethereumService.isMainnet())
-                this.transactionTx = environment.etherscanTxMainnet + tx;
-            else
-                this.transactionTx = environment.etherscanTx + tx;
 
+            this.transactionTx = this._etherscanService.getTransactionLink(tx);
 
             new TransactionTracker(tx, this._ethereumService, 180, 0, async (err, result) => {
                 if (err) {
