@@ -34,7 +34,7 @@
                   <input style="font-size: 20px;"  formControlName="symbol" 
                     matInput placeholder="Symbol" >
                 </mat-form-field>
-                <mat-form-field class="mr-3" *ngIf="tokenType == 'standard'" style="width: 200px;">
+                <mat-form-field class="mr-3" style="width: 200px;">
                   <input style="font-size: 20px;" OnlyNumber="true"  formControlName="totalSupply"
                     min="0" matInput placeholder="Total Supply" type="number" >
                 </mat-form-field>
@@ -76,7 +76,7 @@
                   <mat-card-subtitle>Name : {{stepTwoCreatorForm.controls.name.value}}</mat-card-subtitle>
                   <mat-card-subtitle>Symbol : {{stepTwoCreatorForm.controls.symbol.value}} </mat-card-subtitle>
                   <mat-card-subtitle>Decimals : {{stepTwoCreatorForm.controls.decimals.value}} </mat-card-subtitle>
-                  <mat-card-subtitle>Total supply : {{stepTwoCreatorForm.controls.totalSupply.value}} {{stepTwoCreatorForm.controls.symbol.value}}</mat-card-subtitle>
+                  <mat-card-subtitle >Total supply : {{stepTwoCreatorForm.controls.totalSupply.value}} {{stepTwoCreatorForm.controls.symbol.value}}</mat-card-subtitle>
                   <mat-card-subtitle *ngIf="transactionTx">
                     <a style="font-size:14px" target="_blank" href="{{transactionTx}}">
                       {{(transactionTx) | slice:0:60}}...

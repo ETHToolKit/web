@@ -44,7 +44,9 @@ export class CreatorComponent implements OnInit {
         private _etherescanService:EtherscanService,
         private _ethereumService: EthereumService) {
         this._ethereumService.OnStateChanged().subscribe((result) => this.handleStateChanged(result));
+    }
 
+    async ngOnInit() {
         this.stepTwoCreatorForm = this._formBuilder.group({
             name: ['', Validators.required],
             symbol: ['', Validators.required],
@@ -54,20 +56,8 @@ export class CreatorComponent implements OnInit {
         });
     }
 
-    async ngOnInit() {
-
-    }
-
     public tokenTypeChanged(event: any) {
         this.reset();
-
-        if (this.tokenType != 'standard') {
-            this.stepTwoCreatorForm.removeControl("totalSupply");
-        }
-        else {
-            this.stepTwoCreatorForm.addControl("totalSupply", new FormControl('', Validators.required))
-        }
-
     }
 
     public async deploy() {
