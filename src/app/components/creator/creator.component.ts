@@ -1,19 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EthereumService } from '../../services/ethereum.service';
-import { environment } from '../../../environments/environment';
-import { Dropper } from '../../core/contracts/dropper';
-import { DropperContextService } from '../../services/dropperContext.service';
-import { DataImporterComponent } from '../controls/dataImporter/dataImporter.component';
 import { ServiceEvent } from '../../models/serviceEvent';
-import { TokenInfoComponent } from '../controls/tokenInfo/tokenInfo.component';
-import { DropConfigComponent } from '../controls/dropConfig/dropConfig.component';
-import { DropPackageComponent } from '../controls/dropPackage/dropPackage.component';
-import { MatStepper, MatStep } from '@angular/material';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { MatStep } from '@angular/material';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ContractFactory } from 'src/app/core/contracts/contractFactory';
 import { TransactionTracker } from 'src/app/core/transactionTracker';
 import { EtherscanService } from 'src/app/services/etherscan.service';
+import { ContractFactoryService } from 'src/app/services/contractFactory.service';
 
 
 
@@ -42,6 +34,7 @@ export class CreatorComponent implements OnInit {
     constructor(
         private _formBuilder: FormBuilder,
         private _etherescanService:EtherscanService,
+        private _factory:ContractFactoryService,
         private _ethereumService: EthereumService) {
         this._ethereumService.OnStateChanged().subscribe((result) => this.handleStateChanged(result));
     }
@@ -54,6 +47,8 @@ export class CreatorComponent implements OnInit {
             decimals: [18, [Validators.required, Validators.max(77), Validators.min(0)]],
             donation: [''],
         });
+
+        await this._factory.createFullToken(null);
     }
 
     public tokenTypeChanged(event: any) {
@@ -72,11 +67,10 @@ export class CreatorComponent implements OnInit {
             var symbol = this.stepTwoCreatorForm.controls.symbol.value;
             var donation = this.stepTwoCreatorForm.controls.donation.value;
 
-            var factory = this.getFactoryInstance();
 
-            var params = factory.createTokenParams(decimals, name, symbol,
+            var params = this._factory.createTokenParams(decimals, name, symbol,
                 this._ethereumService.getAccount(), this.tokenType == 'standard', totalSupply);
-            tx = await factory.createContract("MintableToken", params, donation);
+            tx = await this._factory.createContract("MintableToken", params, donation);
 
             this.transactionTx = this._etherescanService.getTransactionLink(tx);
 
@@ -101,15 +95,6 @@ export class CreatorComponent implements OnInit {
             this.status = 3;
             this.error = ex;
         }
-
-    }
-
-    public getFactoryInstance(): ContractFactory {
-
-        if (this._ethereumService.isMainnet())
-            return new ContractFactory(environment.contractFactoryMainnet, this._ethereumService);
-        else
-            return new ContractFactory(environment.contractFactory, this._ethereumService);
 
     }
 

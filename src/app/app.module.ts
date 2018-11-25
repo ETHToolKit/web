@@ -68,6 +68,7 @@ import { TermsComponent } from './components/terms/terms.component';
 import { CreatorComponent } from './components/creator/creator.component';
 import { NetworkGuard } from './services/network.guard';
 import { EtherscanService } from './services/etherscan.service';
+import { ContractFactoryService } from './services/contractFactory.service';
 
 
 
@@ -156,7 +157,8 @@ const appRoutes: Routes = [
     HelperService,
     ContextWorkerService,
     NetworkGuard,
-    EtherscanService
+    EtherscanService,
+    ContractFactoryService
    ],
   bootstrap: [AppComponent]
 })

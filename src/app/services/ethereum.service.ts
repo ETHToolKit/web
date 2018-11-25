@@ -37,6 +37,7 @@ export class EthereumService {
             case "4": return "rinkeby";
             default: return "";
         }
+      
     }
 
     public isSupportedNetwork() : boolean {
@@ -102,7 +103,7 @@ export class EthereumService {
     private internalState = 0;
     private refreshAccounts = () => {
         if (this.web3) {
-
+            
             if (this.web3.version.network != this.networkId && this.networkId != undefined)
                 location.reload();
             //this.networkId = this.web3.version.network;
