@@ -10,6 +10,7 @@ import BigNumber from "bignumber.js";
 import { HttpClient } from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import tmpl from 'blueimp-tmpl';
+// import solc from 'solc';
 
 declare let require: any;
 declare let location: any;
@@ -51,7 +52,8 @@ export class ContractFactoryService {
             burnableToken:false
         });
         
-        console.log(contractCode);
+        // var byte = solc.compile(contractCode, 0);
+        // console.log(byte);
     }
 
     private async getCodeTemplate(path:string) {

@@ -48,7 +48,7 @@ export class CreatorComponent implements OnInit {
             donation: [''],
         });
 
-        await this._factory.createFullToken(null);
+        //await this._factory.createFullToken(null);
     }
 
     public tokenTypeChanged(event: any) {
