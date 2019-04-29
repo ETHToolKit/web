@@ -11,7 +11,12 @@ export class NetworkGuard implements CanActivate, CanActivateChild, CanLoad {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
         let url: string = state.url;
-        return this.checkNetwork(url);
+        var networkReady = this.checkNetwork(url);
+        if(!networkReady) {
+            this.router.navigate(['/'], {});
+        }
+        
+        return networkReady;
     }
 
     canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {

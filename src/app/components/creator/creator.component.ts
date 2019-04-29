@@ -47,8 +47,6 @@ export class CreatorComponent implements OnInit {
             decimals: [18, [Validators.required, Validators.max(77), Validators.min(0)]],
             donation: [''],
         });
-
-        //await this._factory.createFullToken(null);
     }
 
     public tokenTypeChanged(event: any) {

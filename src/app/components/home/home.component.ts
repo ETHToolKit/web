@@ -13,12 +13,15 @@ export class HomeComponent {
   showToken:boolean = true;
 
   constructor(private _ethereumService: EthereumService) {
+  }
+
+  async ngOnInit() {
+    console.log("Init home");
     this._ethereumService.OnStateChanged().subscribe((result) => this.handleStateChanged(result));
   }
 
   public handleStateChanged(data) {
     this.isReady = data.isReady;
     this.showToken = this._ethereumService.getNetwork() == "rinkeby";
-    
   }
 }
