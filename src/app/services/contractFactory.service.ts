@@ -22,7 +22,6 @@ const mintableTokenABI: any = require('../../assets/templates/MintableTokenTempl
 @Injectable()
 export class ContractFactoryService {
 
-    contract: any;
     tokenTemplate:string;
 
     constructor(
@@ -30,15 +29,15 @@ export class ContractFactoryService {
         private http: HttpClient
     ) {
 
-        this.contract = this._ethereum.web3.eth.contract(factoryABI);
     }
 
     private getFactoryInstane(): any {
+        var contract = this._ethereum.web3.eth.contract(factoryABI);
 
         if (this._ethereum.isMainnet())
-            return this.contract.at(environment.contractFactoryMainnet);
+            return contract.at(environment.contractFactoryMainnet);
         else
-            return new this.contract.at(environment.contractFactory);
+            return contract.at(environment.contractFactory);
 
     }
 
